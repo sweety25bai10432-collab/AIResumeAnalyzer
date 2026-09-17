@@ -58,6 +58,10 @@
 
     </div>
 
+
+    <!-- VISUAL DEMO CARD -->
+    <!-- This is only a design preview, NOT actual analysis -->
+
     <div class="hero-card">
 
         <div class="mini-header">
@@ -108,9 +112,9 @@
         </h2>
 
         <span>
-                Upload your resume and provide the job
-                requirements to get your compatibility report.
-            </span>
+            Upload your resume and provide the job
+            requirements to get your compatibility report.
+        </span>
 
     </div>
 
@@ -173,13 +177,22 @@
                     id="jobDescription"
                     placeholder="Example:
 
-Looking for a Java Developer with knowledge of Java, Spring Boot, SQL, Git, Docker and AWS...">
-                </textarea>
+Looking for a Java Developer with knowledge of Java, Spring Boot, SQL, Git, Docker and AWS..."></textarea>
 
         </div>
 
     </div>
 
+
+    <!-- ERROR MESSAGE -->
+
+    <div
+            id="errorMessage"
+            class="error-message hidden">
+    </div>
+
+
+    <!-- ANALYZE BUTTON -->
 
     <button
             class="analyze-btn"
@@ -207,6 +220,10 @@ Looking for a Java Developer with knowledge of Java, Spring Boot, SQL, Git, Dock
 
     <!-- RESULTS -->
 
+    <!-- IMPORTANT:
+         This remains hidden until JavaScript receives
+         the actual analysis result from Java. -->
+
     <div
             id="results"
             class="results hidden">
@@ -221,14 +238,21 @@ Looking for a Java Developer with knowledge of Java, Spring Boot, SQL, Git, Dock
         <div class="score-card">
 
             <div class="big-score">
-                <span id="score">82%</span>
-                <small>Compatibility</small>
+
+                <span id="score">
+                    --
+                </span>
+
+                <small>
+                    Compatibility
+                </small>
+
             </div>
 
             <div class="score-info">
 
-                <h3>
-                    Your resume matches the job requirements.
+                <h3 id="scoreMessage">
+                    Analysis completed.
                 </h3>
 
                 <p>
@@ -247,6 +271,8 @@ Looking for a Java Developer with knowledge of Java, Spring Boot, SQL, Git, Dock
         <div class="result-grid">
 
 
+            <!-- MATCHING SKILLS -->
+
             <div class="result-card matching">
 
                 <h3>
@@ -260,6 +286,8 @@ Looking for a Java Developer with knowledge of Java, Spring Boot, SQL, Git, Dock
 
             </div>
 
+
+            <!-- MISSING SKILLS -->
 
             <div class="result-card missing">
 
@@ -309,13 +337,15 @@ Looking for a Java Developer with knowledge of Java, Spring Boot, SQL, Git, Dock
     </h2>
 
     <span>
-            Built using Java, Apache PDFBox and skill
-            extraction techniques to help candidates
-            understand and improve their resumes.
-        </span>
+        Built using Java, Apache PDFBox and skill
+        extraction techniques to help candidates
+        understand and improve their resumes.
+    </span>
 
 </section>
 
+
+<!-- FOOTER -->
 
 <footer>
 

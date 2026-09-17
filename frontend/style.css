@@ -329,7 +329,7 @@ textarea:focus {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .spinner {

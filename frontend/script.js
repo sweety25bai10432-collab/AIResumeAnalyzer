@@ -8,6 +8,10 @@ function scrollToAnalyzer() {
 }
 
 
+// =============================================
+// SHOW SELECTED FILE NAME
+// =============================================
+
 function showFileName() {
 
     const fileInput =
@@ -15,7 +19,6 @@ function showFileName() {
 
     const fileName =
         document.getElementById("fileName");
-
 
     if (fileInput.files.length > 0) {
 
@@ -31,16 +34,38 @@ function showFileName() {
 }
 
 
+// =============================================
+// ANALYZE RESUME
+// =============================================
+
 async function analyzeResume() {
 
     const fileInput =
         document.getElementById("resumeFile");
 
-
     const jobDescription =
         document
             .getElementById("jobDescription")
             .value;
+
+    const results =
+        document.getElementById("results");
+
+    const loading =
+        document.getElementById("loading");
+
+    const errorMessage =
+        document.getElementById("errorMessage");
+
+
+    // =========================================
+    // HIDE OLD RESULTS
+    // =========================================
+
+    results.classList.add("hidden");
+
+    errorMessage.classList.add("hidden");
+    errorMessage.innerText = "";
 
 
     // =========================================
@@ -49,7 +74,7 @@ async function analyzeResume() {
 
     if (fileInput.files.length === 0) {
 
-        alert(
+        showError(
             "Please upload your resume PDF."
         );
 
@@ -59,7 +84,7 @@ async function analyzeResume() {
 
     if (!jobDescription.trim()) {
 
-        alert(
+        showError(
             "Please enter the job description."
         );
 
@@ -72,19 +97,28 @@ async function analyzeResume() {
 
 
     // =========================================
+    // CHECK FILE TYPE
+    // =========================================
+
+    if (
+        !file.name
+            .toLowerCase()
+            .endsWith(".pdf")
+    ) {
+
+        showError(
+            "Please upload a PDF file."
+        );
+
+        return;
+    }
+
+
+    // =========================================
     // SHOW LOADING
     // =========================================
 
-    document
-        .getElementById("loading")
-        .classList
-        .remove("hidden");
-
-
-    document
-        .getElementById("results")
-        .classList
-        .add("hidden");
+    loading.classList.remove("hidden");
 
 
     try {
@@ -104,9 +138,7 @@ async function analyzeResume() {
         const bytes =
             new Uint8Array(arrayBuffer);
 
-
         let binary = "";
-
 
         const chunkSize = 8192;
 
@@ -158,7 +190,7 @@ async function analyzeResume() {
 
 
         // =====================================
-        // SEND TO JAVA BACKEND
+        // SEND REQUEST TO JAVA
         // =====================================
 
         const response =
@@ -172,24 +204,39 @@ async function analyzeResume() {
                             "application/x-www-form-urlencoded"
                     },
 
-                    body: formData.toString()
+                    body:
+                        formData.toString()
                 }
             );
 
 
+        // =====================================
+        // CHECK SERVER RESPONSE
+        // =====================================
+
         const data =
             await response.json();
 
-
-        // =====================================
-        // ERROR FROM JAVA
-        // =====================================
 
         if (!response.ok) {
 
             throw new Error(
                 data.error ||
                 "Analysis failed."
+            );
+        }
+
+
+        // =====================================
+        // VALIDATE RESULT
+        // =====================================
+
+        if (
+            typeof data.score === "undefined"
+        ) {
+
+            throw new Error(
+                "Invalid response received from Java backend."
             );
         }
 
@@ -203,21 +250,21 @@ async function analyzeResume() {
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Analysis error:",
+            error
+        );
 
 
-        alert(
-            "Could not connect to the Java backend.\n\n" +
+        showError(
+            "Analysis failed: " +
             error.message
         );
 
 
     } finally {
 
-        document
-            .getElementById("loading")
-            .classList
-            .add("hidden");
+        loading.classList.add("hidden");
     }
 }
 
@@ -228,7 +275,13 @@ async function analyzeResume() {
 
 function displayResults(data) {
 
-    // Score
+    const results =
+        document.getElementById("results");
+
+
+    // =========================================
+    // SCORE
+    // =========================================
 
     const score =
         Number(data.score).toFixed(2);
@@ -240,7 +293,36 @@ function displayResults(data) {
         score + "%";
 
 
-    // Matching skills
+    // =========================================
+    // SCORE MESSAGE
+    // =========================================
+
+    const scoreMessage =
+        document.getElementById(
+            "scoreMessage"
+        );
+
+
+    if (Number(data.score) >= 80) {
+
+        scoreMessage.innerText =
+            "Your resume has a strong match with the job requirements.";
+
+    } else if (Number(data.score) >= 50) {
+
+        scoreMessage.innerText =
+            "Your resume has a moderate match with the job requirements.";
+
+    } else {
+
+        scoreMessage.innerText =
+            "Your resume has several skill gaps for this job.";
+    }
+
+
+    // =========================================
+    // MATCHING SKILLS
+    // =========================================
 
     displaySkills(
         "matchingSkills",
@@ -248,7 +330,9 @@ function displayResults(data) {
     );
 
 
-    // Missing skills
+    // =========================================
+    // MISSING SKILLS
+    // =========================================
 
     displaySkills(
         "missingSkills",
@@ -256,7 +340,9 @@ function displayResults(data) {
     );
 
 
-    // Recommendations
+    // =========================================
+    // RECOMMENDATIONS
+    // =========================================
 
     const recommendations =
         document.getElementById(
@@ -282,7 +368,6 @@ function displayResults(data) {
 
         recommendations.appendChild(li);
 
-
     } else {
 
         data.missingSkills.forEach(
@@ -304,21 +389,20 @@ function displayResults(data) {
     }
 
 
-    // Show result section
+    // =========================================
+    // SHOW REAL RESULTS
+    // =========================================
 
-    document
-        .getElementById("results")
-        .classList
-        .remove("hidden");
+    results.classList.remove("hidden");
 
 
-    // Scroll to result
+    // =========================================
+    // SCROLL TO RESULTS
+    // =========================================
 
-    document
-        .getElementById("results")
-        .scrollIntoView({
-            behavior: "smooth"
-        });
+    results.scrollIntoView({
+        behavior: "smooth"
+    });
 }
 
 
@@ -377,4 +461,26 @@ function displaySkills(
 
         container.appendChild(span);
     });
+}
+
+
+// =============================================
+// SHOW ERROR
+// =============================================
+
+function showError(message) {
+
+    const errorMessage =
+        document.getElementById(
+            "errorMessage"
+        );
+
+
+    errorMessage.innerText =
+        message;
+
+
+    errorMessage.classList.remove(
+        "hidden"
+    );
 }
