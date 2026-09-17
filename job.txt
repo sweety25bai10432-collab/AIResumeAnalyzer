@@ -1,0 +1,8 @@
+We are looking for a Java Developer.
+
+The candidate should have knowledge of Java,
+Spring Boot, SQL, MySQL, REST API, Git,
+Docker and AWS.
+
+Knowledge of Data Structures and Algorithms
+is preferred.

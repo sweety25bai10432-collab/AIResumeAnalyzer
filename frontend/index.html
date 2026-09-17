@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Resume Analyzer</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        <span>AI</span>
+        Resume Analyzer
+    </div>
+
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#analyzer">Analyzer</a>
+        <a href="#about">About</a>
+    </div>
+
+</nav>
+
+
+<!-- HERO SECTION -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <p class="tag">
+            ✦ AI-POWERED CAREER TOOL
+        </p>
+
+        <h1>
+            Make Your Resume
+            <span>Job-Ready.</span>
+        </h1>
+
+        <p class="hero-text">
+            Analyze your resume, identify matching skills,
+            discover skill gaps and understand how well
+            your profile matches a job description.
+        </p>
+
+        <button class="primary-btn"
+                onclick="scrollToAnalyzer()">
+            Analyze My Resume →
+        </button>
+
+    </div>
+
+    <div class="hero-card">
+
+        <div class="mini-header">
+            AI Resume Analysis
+        </div>
+
+        <div class="score-circle">
+            <div>
+                <strong>82%</strong>
+                <small>Match</small>
+            </div>
+        </div>
+
+        <div class="mini-stats">
+
+            <div>
+                <b>12</b>
+                <span>Skills Found</span>
+            </div>
+
+            <div>
+                <b>8</b>
+                <span>Matched</span>
+            </div>
+
+            <div>
+                <b>4</b>
+                <span>Missing</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ANALYZER -->
+
+<section class="analyzer" id="analyzer">
+
+    <div class="section-heading">
+
+        <p>RESUME ANALYZER</p>
+
+        <h2>
+            Analyze Your Resume
+        </h2>
+
+        <span>
+                Upload your resume and provide the job
+                requirements to get your compatibility report.
+            </span>
+
+    </div>
+
+
+    <div class="upload-container">
+
+
+        <!-- RESUME UPLOAD -->
+
+        <div class="upload-card">
+
+            <div class="upload-icon">
+                📄
+            </div>
+
+            <h3>
+                Upload Resume
+            </h3>
+
+            <p>
+                Upload your resume in PDF format.
+            </p>
+
+            <label class="upload-btn">
+
+                Choose PDF
+
+                <input
+                        type="file"
+                        id="resumeFile"
+                        accept=".pdf"
+                        onchange="showFileName()">
+
+            </label>
+
+            <p id="fileName">
+                No file selected
+            </p>
+
+        </div>
+
+
+        <!-- JOB DESCRIPTION -->
+
+        <div class="job-card">
+
+            <div class="upload-icon">
+                💼
+            </div>
+
+            <h3>
+                Job Description
+            </h3>
+
+            <p>
+                Paste the requirements for the position.
+            </p>
+
+            <textarea
+                    id="jobDescription"
+                    placeholder="Example:
+
+Looking for a Java Developer with knowledge of Java, Spring Boot, SQL, Git, Docker and AWS...">
+                </textarea>
+
+        </div>
+
+    </div>
+
+
+    <button
+            class="analyze-btn"
+            onclick="analyzeResume()">
+
+        🔍 Analyze Resume
+
+    </button>
+
+
+    <!-- LOADING -->
+
+    <div
+            id="loading"
+            class="loading hidden">
+
+        <div class="spinner"></div>
+
+        <p>
+            AI is analyzing your resume...
+        </p>
+
+    </div>
+
+
+    <!-- RESULTS -->
+
+    <div
+            id="results"
+            class="results hidden">
+
+        <h2>
+            Resume Analysis
+        </h2>
+
+
+        <!-- SCORE -->
+
+        <div class="score-card">
+
+            <div class="big-score">
+                <span id="score">82%</span>
+                <small>Compatibility</small>
+            </div>
+
+            <div class="score-info">
+
+                <h3>
+                    Your resume matches the job requirements.
+                </h3>
+
+                <p>
+                    The score is calculated based on
+                    matching skills between your resume
+                    and the job description.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- SKILLS -->
+
+        <div class="result-grid">
+
+
+            <div class="result-card matching">
+
+                <h3>
+                    ✓ Matching Skills
+                </h3>
+
+                <div
+                        id="matchingSkills"
+                        class="skills">
+                </div>
+
+            </div>
+
+
+            <div class="result-card missing">
+
+                <h3>
+                    ✗ Missing Skills
+                </h3>
+
+                <div
+                        id="missingSkills"
+                        class="skills">
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- RECOMMENDATIONS -->
+
+        <div class="recommendation-card">
+
+            <h3>
+                💡 Recommendations
+            </h3>
+
+            <ul id="recommendations">
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section class="about" id="about">
+
+    <p>
+        ABOUT THE PROJECT
+    </p>
+
+    <h2>
+        Smarter Resume Analysis
+    </h2>
+
+    <span>
+            Built using Java, Apache PDFBox and skill
+            extraction techniques to help candidates
+            understand and improve their resumes.
+        </span>
+
+</section>
+
+
+<footer>
+
+    <p>
+        AI Resume Analyzer © 2026
+    </p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

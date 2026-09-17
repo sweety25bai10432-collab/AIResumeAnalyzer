@@ -1,0 +1,9 @@
+I am a Computer Science student.
+
+I have experience in Java programming,
+Python, SQL, MySQL, HTML, CSS and Git.
+
+I have developed projects using Java
+and have knowledge of data structures.
+
+I am interested in software development.
