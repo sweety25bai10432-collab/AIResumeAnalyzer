@@ -433,8 +433,4 @@ Java ApiServer
 
 **Sweety Kumari**
 
----
-
-## ⭐ Project
-
-If you find this project useful, consider giving the repository a ⭐ on GitHub!
+--
